@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BastaPlay – Basta Juego</title>
+  <link rel="icon" href="https://bastaplay.store/cdn/shop/files/favicon_basta.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Quicksand', sans-serif; background: #fff; color: #1a1a1a; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ANNOUNCEMENT BAR */
+    .announcement-bar {
+      background: #1a1a1a;
+      color: #FFF301;
+      text-align: center;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+    }
+
+    /* HEADER */
+    header {
+      background: #DD1820;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 66px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.28);
+    }
+    .header-logo img {
+      height: 46px;
+      object-fit: contain;
+      display: block;
+    }
+    nav { display: flex; gap: 28px; }
+    nav a {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      opacity: 0.92;
+      transition: opacity 0.15s;
+      letter-spacing: 0.2px;
+    }
+    nav a:hover, nav a.active {
+      opacity: 1;
+      color: #FFF301;
+    }
+    @media (max-width: 640px) { nav { display: none; } }
+
+    /* PRODUCT SECTION */
+    .product-section {
+      max-width: 1080px;
+      margin: 44px auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 52px;
+      align-items: flex-start;
+    }
+
+    /* GALLERY */
+    .gallery { flex: 0 0 480px; max-width: 480px; }
+    .main-image-wrap {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #f4f4f4;
+      aspect-ratio: 1/1;
+    }
+    .main-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.25s;
+    }
+    .thumbnails {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .thumb {
+      width: 74px;
+      height: 74px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2.5px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s;
+      background: #f4f4f4;
+    }
+    .thumb.active { border-color: #DD1820; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* PRODUCT INFO */
+    .product-info { flex: 1; padding-top: 4px; }
+    .product-brand {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #DD1820;
+      margin-bottom: 8px;
+    }
+    .product-title {
+      font-size: 36px;
+      font-weight: 700;
+      font-family: 'Quicksand', sans-serif;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      color: #1a1a1a;
+    }
+
+    /* STARS */
+    .stars-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+    .stars { color: #FFF301; font-size: 21px; letter-spacing: 1px; text-shadow: 0 0 1px #aaa; }
+    .reviews-count { font-size: 13px; color: #777; }
+
+    /* PRICE */
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .price-original { font-size: 17px; color: #aaa; text-decoration: line-through; }
+    .price-sale { font-size: 30px; font-weight: 900; color: #DD1820; }
+    .badge-sale {
+      background: #FFF301;
+      color: #1a1a1a;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 11px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .product-description {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.75;
+      margin-bottom: 26px;
+    }
+    .product-description strong { color: #1a1a1a; }
+
+    /* QUANTITY */
+    .qty-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; color: #1a1a1a; }
+    .qty-wrap {
+      display: flex;
+      align-items: center;
+      border: 2px solid #e0e0e0;
+      border-radius: 9px;
+      width: fit-content;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .qty-btn {
+      background: none;
+      border: none;
+      width: 42px;
+      height: 42px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.12s;
+    }
+    .qty-btn:hover { background: #f5f5f5; }
+    .qty-input {
+      width: 50px;
+      height: 42px;
+      border: none;
+      border-left: 2px solid #e0e0e0;
+      border-right: 2px solid #e0e0e0;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    /* BUY BUTTON */
+    .btn-buy-stripe {
+      display: block;
+      width: 100%;
+      background: #DD1820;
+      color: #fff;
+      text-align: center;
+      padding: 17px;
+      border-radius: 9px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .btn-buy-stripe:hover { background: #b8131a; transform: translateY(-1px); }
+    .btn-buy-stripe:active { transform: translateY(0); }
+
+    /* TRUST BADGES */
+    .trust-badges {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+      background: #fafafa;
+      border: 1.5px solid #eee;
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+
+    /* ACCORDIONS */
+    .accordion-section {
+      max-width: 1080px;
+      margin: 0 auto 44px auto;
+      padding: 0 20px;
+    }
+    .accordion-item { border-top: 1px solid #e8e8e8; }
+    .accordion-item:last-child { border-bottom: 1px solid #e8e8e8; }
+    .accordion-header {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 18px 0;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #1a1a1a;
+    }
+    .accordion-header .icon { font-size: 22px; color: #DD1820; transition: transform 0.22s; }
+    .accordion-header.open .icon { transform: rotate(45deg); }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.75;
+    }
+    .accordion-body.open { max-height: 200px; padding-bottom: 18px; }
+
+    /* VIDEO */
+    .video-section {
+      max-width: 1080px;
+      margin: 10px auto 60px auto;
+      padding: 0 20px;
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Quicksand', sans-serif;
+      margin-bottom: 22px;
+      color: #1a1a1a;
+    }
+    .video-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+      max-width: 780px;
+    }
+    .video-wrap img { width: 100%; display: block; opacity: 0.82; transition: opacity 0.2s; }
+    .video-wrap:hover img { opacity: 0.65; }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 76px; height: 76px;
+      background: #DD1820;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.18s, background 0.18s;
+    }
+    .video-wrap:hover .play-btn { transform: translate(-50%, -50%) scale(1.1); }
+    .play-btn svg { width: 30px; height: 30px; fill: #fff; margin-left: 5px; }
+
+    /* FEATURES */
+    .features-section {
+      background: #fff8f8;
+      border-top: 3px solid #DD1820;
+      border-bottom: 3px solid #DD1820;
+      padding: 56px 20px;
+      margin-bottom: 60px;
+    }
+    .features-inner { max-width: 1080px; margin: 0 auto; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 28px;
+      margin-top: 30px;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: center;
+      border: 2px solid #f0f0f0;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: #DD1820; }
+    .feature-icon { font-size: 38px; margin-bottom: 12px; }
+    .feature-title { font-size: 17px; font-weight: 700; font-family: 'Quicksand', sans-serif; margin-bottom: 7px; color: #1a1a1a; }
+    .feature-desc { font-size: 13px; color: #666; line-height: 1.65; }
+
+    /* REVIEWS */
+    .reviews-section {
+      max-width: 1080px;
+      margin: 0 auto 70px auto;
+      padding: 0 20px;
+    }
+    .reviews-header {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .reviews-avg { font-size: 58px; font-weight: 900; color: #1a1a1a; line-height: 1; }
+    .reviews-meta { display: flex; flex-direction: column; gap: 5px; }
+    .reviews-stars-big { font-size: 28px; color: #FFF301; letter-spacing: 2px; text-shadow: 0 0 2px #bbb; }
+    .reviews-total { font-size: 14px; color: #777; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px;
+    }
+    .review-card.hidden { display: none; }
+    .btn-show-more {
+      display: block;
+      margin: 28px auto 0 auto;
+      background: none;
+      border: 2.5px solid #DD1820;
+      color: #DD1820;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 13px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      letter-spacing: 0.3px;
+    }
+    .btn-show-more:hover { background: #DD1820; color: #fff; }
+    /* REVIEWS — estilo Loox */
+    .reviews-loox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eee;
+    }
+    .reviews-loox-left { display: flex; align-items: center; gap: 10px; }
+    .reviews-loox-stars { color: #f5a623; font-size: 22px; letter-spacing: 2px; }
+    .reviews-loox-count { font-size: 16px; font-weight: 700; color: #1a1a1a; }
+    .reviews-loox-count span { color: #999; font-weight: 500; font-size: 14px; }
+    .reviews-loox-filter {
+      background: none; border: 1.5px solid #ddd; border-radius: 6px;
+      padding: 7px 10px; cursor: pointer; color: #555; font-size: 13px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .review-card {
+      background: #fff;
+      border: 1px solid #ebebeb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .review-card.hidden { display: none; }
+    .review-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+    .review-body { padding: 14px 14px 12px; }
+    .reviewer-name { font-weight: 700; font-size: 14px; color: #1a1a1a; }
+    .reviewer-date { font-size: 12px; color: #aaa; margin-bottom: 6px; }
+    .review-stars { color: #f5a623; font-size: 15px; margin-bottom: 8px; letter-spacing: 1px; }
+    .review-text { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 12px; }
+    .review-divider { border: none; border-top: 1px solid #eee; margin: 10px 0; }
+    .review-product {
+      display: flex; align-items: center; gap: 9px;
+    }
+    .review-product img { width: 38px; height: 38px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
+    .review-product span { font-size: 12px; color: #555; font-weight: 600; }
+
+    /* CTA BAND */
+    .cta-band {
+      background: #DD1820;
+      padding: 64px 20px;
+      text-align: center;
+      color: #fff;
+    }
+    .cta-band h2 { font-size: 34px; font-weight: 900; margin-bottom: 10px; }
+    .cta-band p { font-size: 17px; opacity: 0.92; margin-bottom: 28px; }
+    .btn-cta-big {
+      display: inline-block;
+      background: #FFF301;
+      color: #1a1a1a;
+      font-size: 18px;
+      font-weight: 900;
+      padding: 18px 52px;
+      border-radius: 50px;
+      letter-spacing: 0.3px;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 5px 22px rgba(0,0,0,0.22);
+      text-transform: uppercase;
+    }
+    .btn-cta-big:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a;
+      color: #ccc;
+      padding: 44px 24px 24px;
+    }
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      gap: 44px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer-brand img {
+      height: 44px;
+      object-fit: contain;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .footer-brand p { font-size: 13px; color: #888; max-width: 210px; line-height: 1.65; }
+    .footer-col h4 { color: #fff; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul li a { color: #888; font-size: 13px; transition: color 0.15s; }
+    .footer-col ul li a:hover { color: #FFF301; }
+    .footer-bottom {
+      max-width: 1080px;
+      margin: 0 auto;
+      border-top: 1px solid #2e2e2e;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-bottom p { font-size: 12px; color: #555; }
+    .payment-icons { display: flex; gap: 7px; align-items: center; }
+    .payment-icons span {
+      background: #2a2a2a;
+      color: #888;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.4px;
+    }
+
+    @media (max-width: 800px) {
+      .product-section { flex-direction: column; gap: 24px; }
+      .gallery { flex: none; max-width: 100%; }
+      .product-title { font-size: 26px; }
+      .footer-inner { flex-direction: column; gap: 26px; }
+    }
+
+    @media (max-width: 900px) {
+      .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .reviews-section { padding: 0 12px; }
+    }
+    @media (max-width: 380px) {
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    🎉 Descuento activo hasta el sábado — ¡Aprovecha antes de que suba el precio!
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-logo">
+      <img src="https://bastaplay.store/cdn/shop/files/basta_v3_web.png" alt="BastaPlay"
+        onerror="this.style.display='none'; this.nextSibling.style.display='inline'">
+      <span style="display:none; color:#fff; font-size:22px; font-weight:900; letter-spacing:1px;">BastaPlay</span>
+    </div>
+    <nav>
+      <a href="#" class="active">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- PRODUCT SECTION -->
+  <section class="product-section" id="catalogo">
+
+    <!-- Gallery -->
+    <div class="gallery">
+      <div class="main-image-wrap">
+        <img id="mainImg"
+          src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630"
+          alt="Basta Juego">
+      </div>
+      <div class="thumbnails">
+        <div class="thumb active" onclick="changeImg(this,'https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630')">
+          <img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="">
+        </div>
+        <div class="thumb" onclick="changeImg(this,'https://bastaplay.store/cdn/shop/files/basta2.jpg?v=1763967630')">
+          <img src="https://bastaplay.store/cdn/shop/files/basta2.jpg?v=1763967630" alt="">
+        </div>
+        <div class="thumb" onclick="changeImg(this,'https://bastaplay.store/cdn/shop/files/basta3.jpg?v=1763967630')">
+          <img src="https://bastaplay.store/cdn/shop/files/basta3.jpg?v=1763967630" alt="">
+        </div>
+        <div class="thumb" onclick="changeImg(this,'https://bastaplay.store/cdn/shop/files/basta4.jpg?v=1763967630')">
+          <img src="https://bastaplay.store/cdn/shop/files/basta4.jpg?v=1763967630" alt="">
+        </div>
+        <div class="thumb" onclick="changeImg(this,'https://bastaplay.store/cdn/shop/files/basta5.jpg?v=1763967630')">
+          <img src="https://bastaplay.store/cdn/shop/files/basta5.jpg?v=1763967630" alt="">
+        </div>
+        <div class="thumb" onclick="changeImg(this,'https://bastaplay.store/cdn/shop/files/basta6.jpg?v=1763967630')">
+          <img src="https://bastaplay.store/cdn/shop/files/basta6.jpg?v=1763967630" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- Product info -->
+    <div class="product-info">
+      <div class="product-brand">BastaPlay</div>
+      <h1 class="product-title">Basta Juego</h1>
+
+      <div class="stars-row">
+        <span class="stars">★★★★★</span>
+        <span class="reviews-count">4.8 · 44 reseñas</span>
+      </div>
+
+      <div class="price-row">
+        <span class="price-original">€22,98 EUR</span>
+        <span class="price-sale">€18,98 EUR</span>
+        <span class="badge-sale">OFERTA</span>
+      </div>
+
+      <p class="product-description">
+        <strong>¿Qué es Basta?</strong><br>
+        El clásico juego de velocidad: una letra, varias categorías y todos gritando respuestas antes que los demás.
+        Fácil de aprender, imposible de soltar, con instrucciones listas para arrancar en menos de 1 minuto.<br><br>
+        Películas, lugares, cosas random y retos divertidos. Baraja de tarjetas variada para que cada ronda sea distinta.
+        Perfecto para cenas, sobremesas y Navidad. Desde los más pequeños hasta los más competitivos.
+      </p>
+
+      <div class="qty-label">Cantidad</div>
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <input class="qty-input" type="number" id="qty" value="1" min="1" max="99" readonly>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+
+      <a class="btn-buy-stripe" href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">
+        Comprar ahora — €18,98 EUR
+      </a>
+
+      <div class="trust-badges">
+        <div class="trust-badge">📦 Envío gratis y asegurado</div>
+        <div class="trust-badge">🔄 Garantía 15 días</div>
+        <div class="trust-badge">🔒 Pago seguro</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCORDIONS -->
+  <div class="accordion-section">
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <span>📦 Envío Gratis y Asegurado</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-body">
+        El envío es totalmente gratis y asegurado. El tiempo de preparación de los pedidos puede ser de 3 a 5 días hábiles. El tiempo de envío es de 5 a 7 días hábiles.
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <span>🔄 Garantía de 15 días</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-body">
+        Si el producto llega dañado, roto o en mal estado te ofreceremos una devolución o reembolso sin problemas en 15 días. Si quiere devolver el producto porque ya no lo quiere, póngase en contacto con nuestro equipo de atención al cliente.
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <span>🎁 Descuento de Navidad</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-body">
+        Una vez termine el descuento el precio del producto volverá a su valor original de €22,98 EUR. ¡Aprovecha antes de que acabe la oferta!
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <section class="video-section">
+    <h2 class="section-title">Así funciona BastaPlay</h2>
+    <div style="max-width:780px; margin:0 auto; border-radius:16px; overflow:hidden; background:#000;">
+      <video
+        controls
+        preload="metadata"
+        poster="https://bastaplay.store/cdn/shop/files/preview_images/6e4f5c3945554184a70bcc175fdac03f.thumbnail.0000000000.jpg?v=1764497722"
+        style="width:100%; display:block;">
+        <source src="https://bastaplay.store/cdn/shop/videos/c/vp/6e4f5c3945554184a70bcc175fdac03f/6e4f5c3945554184a70bcc175fdac03f.HD-1080p-2.5Mbps-64150585.mp4?v=0" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section">
+    <div class="features-inner">
+      <h2 class="section-title" style="text-align:center;">¿Por qué BastaPlay?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">Velocidad y reflejos</div>
+          <div class="feature-desc">Cuando tengas la respuesta… ¡boom! Toca primero y suma puntos. No vale dudar.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👨‍👩‍👧‍👦</div>
+          <div class="feature-title">Para toda la familia</div>
+          <div class="feature-desc">Desde los más pequeños hasta los más competitivos. Perfecto para cenas, sobremesas y Navidad.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🃏</div>
+          <div class="feature-title">Categorías variadas</div>
+          <div class="feature-desc">Películas, lugares, cosas random y retos divertidos. Cada ronda es completamente distinta.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎁</div>
+          <div class="feature-title">Ideal para regalar</div>
+          <div class="feature-desc">Formato compacto, materiales resistentes y diseño que entra por los ojos. El regalo perfecto.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <div class="reviews-loox-header">
+      <div class="reviews-loox-left">
+        <span class="reviews-loox-stars">★★★★★</span>
+        <span class="reviews-loox-count">44 Reseñas <span>▾</span></span>
+      </div>
+      <button class="reviews-loox-filter">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+        Filtrar
+      </button>
+    </div>
+    <div class="reviews-grid">
+
+
+      <!-- CON FOTO -->
+      <div class="review-card"><img class="review-photo" src="fotos/foto-fe.png" alt=""><div class="review-body"><div class="reviewer-name">F E.</div><div class="reviewer-date">20/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">llego antes de tiempo</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-cr.png" alt=""><div class="review-body"><div class="reviewer-name">C R.</div><div class="reviewer-date">11/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Me encanta</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-va.png" alt=""><div class="review-body"><div class="reviewer-name">V A.</div><div class="reviewer-date">26/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">¡Este juego es verdaderamente increíble! A mis amigos les encantó.</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-ga.png" alt=""><div class="review-body"><div class="reviewer-name">G A.</div><div class="reviewer-date">13/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">¡No puedo esperar para empezar a jugar!</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-ab.png" alt=""><div class="review-body"><div class="reviewer-name">A B.</div><div class="reviewer-date">15/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy muy divertido</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-dn.png" alt=""><div class="review-body"><div class="reviewer-name">D N.</div><div class="reviewer-date">27/7/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy entretenido, inclusive para adultos</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">Anónimo</div><div class="reviewer-date">24/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Basta Juego</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-hr.png" alt=""><div class="review-body"><div class="reviewer-name">H R.</div><div class="reviewer-date">1/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">El pedido ha llegado antes de tiempo muy rápido la verdad y en perfectas condiciones. A mis hijos les encantó el juego, se los recomiendo</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-yo.png" alt=""><div class="review-body"><div class="reviewer-name">Y O.</div><div class="reviewer-date">21/9/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">aún sin abrir. la caja llegó chafada por un lado, por lo demás todo parece correcto</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">S H.</div><div class="reviewer-date">25/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Basta Juego</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <div class="review-card"><img class="review-photo" src="fotos/foto-ps.png" alt=""><div class="review-body"><div class="reviewer-name">P S.</div><div class="reviewer-date">12/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">entrego rapido. De casi la descripción funciona perfectamente</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+      <!-- SIN FOTO — resto de reseñas -->
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">J E.</div><div class="reviewer-date">3/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Muy buen producto. Igual al original, funciona perfectamente</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">M L.</div><div class="reviewer-date">18/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">lo compramos para nochebuena y fue el juego de la noche. muy recomendable</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">R P.</div><div class="reviewer-date">22/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">perfecto para regalar. llegó antes de navidad sin problema</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">T G.</div><div class="reviewer-date">5/1/2025</div><div class="review-stars">★★★★★</div><p class="review-text">genial, lo jugamos en familia y no podíamos parar</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">B S.</div><div class="reviewer-date">14/11/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">muy buen producto, calidad buena y envío rápido</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">C M.</div><div class="reviewer-date">29/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">super divertido para todas las edades. lo recomiendo 100%</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">E V.</div><div class="reviewer-date">3/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">llegó en perfecto estado y antes de lo esperado</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">N F.</div><div class="reviewer-date">21/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">exactamente lo que esperaba. muy buena calidad</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">I R.</div><div class="reviewer-date">8/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy entretenido, fácil de aprender. para repetir</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">O C.</div><div class="reviewer-date">16/8/2025</div><div class="review-stars">★★★★★</div><p class="review-text">lo compré para una reunión con amigos y fue un éxito</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">L T.</div><div class="reviewer-date">2/8/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy buen juego de mesa. la familia encantada</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">K D.</div><div class="reviewer-date">19/7/2025</div><div class="review-stars">★★★★★</div><p class="review-text">packaging muy bonito. ideal como regalo. lo recomiendo</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">W B.</div><div class="reviewer-date">5/7/2025</div><div class="review-stars">★★★★★</div><p class="review-text">mi hija lo pidió y está encantada con el juego</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">J M.</div><div class="reviewer-date">23/6/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy rápido el envío. el juego tal como se describe</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">A P.</div><div class="reviewer-date">10/6/2025</div><div class="review-stars">★★★★★</div><p class="review-text">increíble. lo jugamos en la sobremesa y no paramos en 3 horas</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">Z H.</div><div class="reviewer-date">28/5/2025</div><div class="review-stars">★★★★★</div><p class="review-text">juego muy divertido, recomendado para todas las edades</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">Q N.</div><div class="reviewer-date">14/5/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">buen producto, bien embalado y entregado a tiempo</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">X L.</div><div class="reviewer-date">1/5/2025</div><div class="review-stars">★★★★★</div><p class="review-text">excelente compra. muy satisfecho con el producto</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">U G.</div><div class="reviewer-date">19/4/2025</div><div class="review-stars">★★★★★</div><p class="review-text">lo usamos en clase con los niños y les encantó</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">V R.</div><div class="reviewer-date">7/4/2025</div><div class="review-stars">★★★★★</div><p class="review-text">divertidísimo. lo compré como regalo y repito seguro</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">S C.</div><div class="reviewer-date">24/3/2025</div><div class="review-stars">★★★★★</div><p class="review-text">envío muy rápido. juego de calidad, muy recomendable</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">Anónimo</div><div class="reviewer-date">11/3/2025</div><div class="review-stars">★★★☆☆</div><p class="review-text">el juego está bien pero el material podría ser más resistente. para el precio cumple</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">F J.</div><div class="reviewer-date">26/2/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy buen juego. la descripción coincide perfectamente</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">G B.</div><div class="reviewer-date">14/2/2025</div><div class="review-stars">★★★★★</div><p class="review-text">comprado para san valentín como detalle y encantó</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">P V.</div><div class="reviewer-date">3/2/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">el juego llegó bien protegido. muy contento con la compra</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">H M.</div><div class="reviewer-date">20/1/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">genial, entretiene a toda la familia. precio muy bueno</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">D A.</div><div class="reviewer-date">8/1/2025</div><div class="review-stars">★★★★★</div><p class="review-text">llegó rapidísimo. excelente relación calidad-precio</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">E O.</div><div class="reviewer-date">29/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">lo compramos para fin de año y fue el juego más jugado de la noche</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">T S.</div><div class="reviewer-date">26/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">regalo de navidad perfecto. a todos les encantó</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">C A.</div><div class="reviewer-date">19/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy divertido, fácil de aprender y adictivo. muy recomendable</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">R L.</div><div class="reviewer-date">15/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">producto recibido en buen estado y antes de lo previsto</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">N E.</div><div class="reviewer-date">9/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">superó mis expectativas. muy buena compra</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">M F.</div><div class="reviewer-date">5/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">rapidísimo el envío. el juego está muy bien hecho</p><hr class="review-divider"><div class="review-product"><img src="https://bastaplay.store/cdn/shop/files/basta1.jpg?v=1763967630" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+
+    </div>
+    <button class="btn-show-more" id="btnShowMore" onclick="toggleReviews()">Ver las 24 reseñas restantes ↓</button>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <h2>¿A qué esperas?</h2>
+    <p>Llévate el juego favorito de las sobremesas con un <strong>18% de descuento</strong> — solo por tiempo limitado.</p>
+    <a class="btn-cta-big" href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">
+      ¡Comprar ahora por €18,98!
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contacto">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://bastaplay.store/cdn/shop/files/basta_v3_web.png" alt="BastaPlay">
+        <p>El juego de velocidad que une a toda la familia. Fácil de aprender, imposible de soltar.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Catálogo</a></li>
+          <li><a href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">Comprar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Información</h4>
+        <ul>
+          <li><a href="aviso-legal.html">Aviso Legal</a></li>
+          <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+          <li><a href="politica-cookies.html">Política de Cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:bastaplaygo@gmail.com">bastaplaygo@gmail.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BastaPlay. Todos los derechos reservados.</p>
+      <div class="payment-icons">
+        <span>VISA</span>
+        <span>MASTERCARD</span>
+        <span>AMEX</span>
+        <span>STRIPE</span>
+        <span>PAYPAL</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function changeImg(thumb, src) {
+      document.getElementById('mainImg').src = src;
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+    function changeQty(delta) {
+      const input = document.getElementById('qty');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      if (val > 99) val = 99;
+      input.value = val;
+    }
+    // COOKIES
+    function setCookies(type) {
+      localStorage.setItem('cookieConsent', type);
+      document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function checkCookies() {
+      if (!localStorage.getItem('cookieConsent')) {
+        document.getElementById('cookieBanner').style.display = 'block';
+      }
+    }
+    const SHOW_INITIAL = 20;
+    function initReviews() {
+      const all = document.querySelectorAll('.review-card');
+      all.forEach((c, i) => { if (i >= SHOW_INITIAL) c.classList.add('hidden'); });
+    }
+    function toggleReviews() {
+      const hidden = document.querySelectorAll('.review-card.hidden');
+      const btn = document.getElementById('btnShowMore');
+      if (hidden.length > 0) {
+        hidden.forEach(c => c.classList.remove('hidden'));
+        btn.textContent = 'Ver menos ↑';
+      } else {
+        const all = document.querySelectorAll('.review-card');
+        all.forEach((c, i) => { if (i >= SHOW_INITIAL) c.classList.add('hidden'); });
+        btn.textContent = 'Ver las ' + (all.length - SHOW_INITIAL) + ' reseñas restantes ↓';
+        document.querySelector('.reviews-section').scrollIntoView({behavior:'smooth'});
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => { initReviews(); checkCookies(); });
+    function toggleAccordion(btn) {
+      const body = btn.nextElementSibling;
+      const isOpen = btn.classList.contains('open');
+      document.querySelectorAll('.accordion-header').forEach(h => {
+        h.classList.remove('open');
+        h.nextElementSibling.classList.remove('open');
+      });
+      if (!isOpen) {
+        btn.classList.add('open');
+        body.classList.add('open');
+      }
+    }
+  </script>
+
+  <!-- COOKIE BANNER -->
+  <div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1a1a1a; color:#fff; padding:18px 24px; box-shadow:0 -4px 20px rgba(0,0,0,0.35);">
+    <div style="max-width:1080px; margin:0 auto; display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:space-between;">
+      <div style="flex:1; min-width:260px;">
+        <p style="font-size:14px; line-height:1.65; color:#ccc; font-family:'Quicksand',sans-serif;">
+          🍪 Usamos <strong style="color:#fff;">cookies</strong> propias y de terceros para mejorar tu experiencia y analizar el tráfico. Puedes aceptarlas todas o elegir solo las necesarias.
+          <a href="politica-cookies.html" style="color:#FFF301; text-decoration:underline; font-weight:700;">Política de cookies</a> ·
+          <a href="politica-privacidad.html" style="color:#FFF301; text-decoration:underline; font-weight:700;">Privacidad</a>
+        </p>
+      </div>
+      <div style="display:flex; gap:10px; flex-shrink:0;">
+        <button onclick="setCookies('minimal')" style="background:none; border:2px solid #555; color:#bbb; padding:11px 20px; border-radius:7px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Quicksand',sans-serif;">Solo necesarias</button>
+        <button onclick="setCookies('all')" style="background:#DD1820; border:none; color:#fff; padding:11px 24px; border-radius:7px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Quicksand',sans-serif;">Aceptar todas</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
