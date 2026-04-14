@@ -55,7 +55,57 @@
       opacity: 1;
       color: #FFF301;
     }
-    @media (max-width: 640px) { nav { display: none; } }
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* MOBILE NAV DRAWER */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 66px;
+      left: 0; right: 0;
+      background: #DD1820;
+      z-index: 99;
+      flex-direction: column;
+      padding: 12px 0 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 13px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      letter-spacing: 0.2px;
+      transition: background 0.15s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { background: rgba(255,255,255,0.1); }
+
+    @media (max-width: 640px) {
+      nav { display: none; }
+      .hamburger { display: flex; }
+    }
 
     /* PRODUCT SECTION */
     .product-section {
@@ -530,9 +580,21 @@
     <nav>
       <a href="#" class="active">Inicio</a>
       <a href="#catalogo">Catálogo</a>
+      <a href="#quienes-somos">Quiénes somos</a>
       <a href="#contacto">Contacto</a>
     </nav>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <!-- MOBILE NAV DRAWER -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#" onclick="closeMenu()">Inicio</a>
+    <a href="#catalogo" onclick="closeMenu()">Catálogo</a>
+    <a href="#quienes-somos" onclick="closeMenu()">Quiénes somos</a>
+    <a href="#contacto" onclick="closeMenu()">Contacto</a>
+  </nav>
 
   <!-- PRODUCT SECTION -->
   <section class="product-section" id="catalogo">
@@ -683,6 +745,30 @@
     </div>
   </section>
 
+  <!-- QUIÉNES SOMOS -->
+  <section id="quienes-somos" style="background:#fafafa; padding:72px 20px;">
+    <div style="max-width:780px; margin:0 auto; text-align:center;">
+      <p style="font-size:13px; font-weight:700; letter-spacing:2px; color:#DD1820; text-transform:uppercase; margin-bottom:12px;">Nuestra historia</p>
+      <h2 style="font-size:32px; font-weight:900; color:#1a1a1a; margin-bottom:24px; line-height:1.25;">Nacimos para reunir a la gente alrededor de una mesa</h2>
+      <p style="font-size:16px; color:#555; line-height:1.8; margin-bottom:20px;">BastaPlay nació de una sobremesa familiar en la que nos dimos cuenta de que los mejores momentos no necesitan pantallas — solo a las personas que quieres y un juego que enganche a todos.</p>
+      <p style="font-size:16px; color:#555; line-height:1.8; margin-bottom:36px;">Somos una empresa española con años de experiencia en el sector del entretenimiento y el juego en familia. Llevamos tiempo trabajando para que cada producto que sale con nuestro nombre cumpla una sola promesa: que la gente se lo pase bien de verdad.</p>
+      <div style="display:flex; justify-content:center; gap:40px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:10px; background:#fff; border:1px solid #eee; border-radius:10px; padding:14px 22px;">
+          <span style="font-size:24px;">🇪🇸</span>
+          <span style="font-size:14px; font-weight:700; color:#1a1a1a;">Empresa española</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#fff; border:1px solid #eee; border-radius:10px; padding:14px 22px;">
+          <span style="font-size:24px;">🔒</span>
+          <span style="font-size:14px; font-weight:700; color:#1a1a1a;">Pago 100% seguro</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#fff; border:1px solid #eee; border-radius:10px; padding:14px 22px;">
+          <span style="font-size:24px;">📦</span>
+          <span style="font-size:14px; font-weight:700; color:#1a1a1a;">Envío rápido a España</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- REVIEWS -->
   <section class="reviews-section">
     <div class="reviews-loox-header">
@@ -796,8 +882,8 @@
         <h4>Contacto</h4>
         <ul>
           <li><a href="mailto:bastaplaygo@gmail.com">bastaplaygo@gmail.com</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">TikTok</a></li>
+          <li><a href="https://www.instagram.com/bastaplay_go/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@basta.play" target="_blank">TikTok</a></li>
         </ul>
       </div>
     </div>
@@ -853,6 +939,16 @@
         btn.textContent = 'Ver las ' + (all.length - SHOW_INITIAL) + ' reseñas restantes ↓';
         document.querySelector('.reviews-section').scrollIntoView({behavior:'smooth'});
       }
+    }
+    function toggleMenu() {
+      const btn = document.getElementById('hamburger');
+      const nav = document.getElementById('mobileNav');
+      btn.classList.toggle('open');
+      nav.classList.toggle('open');
+    }
+    function closeMenu() {
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobileNav').classList.remove('open');
     }
     document.addEventListener('DOMContentLoaded', () => { initReviews(); checkCookies(); });
     function toggleAccordion(btn) {
