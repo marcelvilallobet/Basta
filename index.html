@@ -14,9 +14,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BastaPlay – Basta Juego</title>
   <link rel="icon" href="fotos/favicon.png">
+  <link rel="preload" as="image" href="fotos/basta1.jpg" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Quicksand', sans-serif; background: #fff; color: #1a1a1a; }
@@ -626,23 +628,24 @@
       <div class="main-image-wrap">
         <img id="mainImg"
           src="fotos/basta1.jpg"
-          alt="Basta Juego">
+          alt="Basta Juego"
+          fetchpriority="high" width="480" height="480">
       </div>
       <div class="thumbnails">
         <div class="thumb active" onclick="changeImg(this,'fotos/basta1.jpg')">
           <img src="fotos/basta1.jpg" alt="">
         </div>
         <div class="thumb" onclick="changeImg(this,'fotos/basta2.jpg')">
-          <img src="fotos/basta2.jpg" alt="">
+          <img loading="lazy" src="fotos/basta2.jpg" alt="">
         </div>
         <div class="thumb" onclick="changeImg(this,'fotos/basta3.jpg')">
-          <img src="fotos/basta3.jpg" alt="">
+          <img loading="lazy" src="fotos/basta3.jpg" alt="">
         </div>
         <div class="thumb" onclick="changeImg(this,'fotos/basta4.jpg')">
-          <img src="fotos/basta4.jpg" alt="">
+          <img loading="lazy" src="fotos/basta4.jpg" alt="">
         </div>
         <div class="thumb" onclick="changeImg(this,'fotos/basta5.jpg')">
-          <img src="fotos/basta5.jpg" alt="">
+          <img loading="lazy" src="fotos/basta5.jpg" alt="">
         </div>
       </div>
     </div>
@@ -720,7 +723,7 @@
     <div class="video-player" id="videoPlayer" onclick="playPromo()">
       <video
         id="promoVideo"
-        preload="metadata"
+        preload="none"
         playsinline
         poster="fotos/basta1.jpg">
         <source src="fotos/promocional.mp4#t=1.5" type="video/mp4">
@@ -801,27 +804,27 @@
 
 
       <!-- CON FOTO -->
-      <div class="review-card"><img class="review-photo" src="fotos/foto-fe.png" alt=""><div class="review-body"><div class="reviewer-name">F E.</div><div class="reviewer-date">20/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">llego antes de tiempo</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-fe.png" alt=""><div class="review-body"><div class="reviewer-name">F E.</div><div class="reviewer-date">20/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">llego antes de tiempo</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-cr.png" alt=""><div class="review-body"><div class="reviewer-name">C R.</div><div class="reviewer-date">11/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Me encanta</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-cr.png" alt=""><div class="review-body"><div class="reviewer-name">C R.</div><div class="reviewer-date">11/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Me encanta</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-va.png" alt=""><div class="review-body"><div class="reviewer-name">V A.</div><div class="reviewer-date">26/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">¡Este juego es verdaderamente increíble! A mis amigos les encantó.</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-va.png" alt=""><div class="review-body"><div class="reviewer-name">V A.</div><div class="reviewer-date">26/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">¡Este juego es verdaderamente increíble! A mis amigos les encantó.</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-ga.png" alt=""><div class="review-body"><div class="reviewer-name">G A.</div><div class="reviewer-date">13/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">¡No puedo esperar para empezar a jugar!</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-ga.png" alt=""><div class="review-body"><div class="reviewer-name">G A.</div><div class="reviewer-date">13/10/2025</div><div class="review-stars">★★★★★</div><p class="review-text">¡No puedo esperar para empezar a jugar!</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-ab.png" alt=""><div class="review-body"><div class="reviewer-name">A B.</div><div class="reviewer-date">15/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy muy divertido</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-ab.png" alt=""><div class="review-body"><div class="reviewer-name">A B.</div><div class="reviewer-date">15/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy muy divertido</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-dn.png" alt=""><div class="review-body"><div class="reviewer-name">D N.</div><div class="reviewer-date">27/7/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy entretenido, inclusive para adultos</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-dn.png" alt=""><div class="review-body"><div class="reviewer-name">D N.</div><div class="reviewer-date">27/7/2025</div><div class="review-stars">★★★★★</div><p class="review-text">muy entretenido, inclusive para adultos</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
       <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">Anónimo</div><div class="reviewer-date">24/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Basta Juego</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-hr.png" alt=""><div class="review-body"><div class="reviewer-name">H R.</div><div class="reviewer-date">1/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">El pedido ha llegado antes de tiempo muy rápido la verdad y en perfectas condiciones. A mis hijos les encantó el juego, se los recomiendo</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-hr.png" alt=""><div class="review-body"><div class="reviewer-name">H R.</div><div class="reviewer-date">1/9/2025</div><div class="review-stars">★★★★★</div><p class="review-text">El pedido ha llegado antes de tiempo muy rápido la verdad y en perfectas condiciones. A mis hijos les encantó el juego, se los recomiendo</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-yo.png" alt=""><div class="review-body"><div class="reviewer-name">Y O.</div><div class="reviewer-date">21/9/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">aún sin abrir. la caja llegó chafada por un lado, por lo demás todo parece correcto</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-yo.png" alt=""><div class="review-body"><div class="reviewer-name">Y O.</div><div class="reviewer-date">21/9/2025</div><div class="review-stars">★★★★☆</div><p class="review-text">aún sin abrir. la caja llegó chafada por un lado, por lo demás todo parece correcto</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
       <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">S H.</div><div class="reviewer-date">25/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Basta Juego</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
-      <div class="review-card"><img class="review-photo" src="fotos/foto-ps.png" alt=""><div class="review-body"><div class="reviewer-name">P S.</div><div class="reviewer-date">12/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">entrego rapido. De casi la descripción funciona perfectamente</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
+      <div class="review-card"><img class="review-photo" loading="lazy" decoding="async" src="fotos/foto-ps.png" alt=""><div class="review-body"><div class="reviewer-name">P S.</div><div class="reviewer-date">12/11/2025</div><div class="review-stars">★★★★★</div><p class="review-text">entrego rapido. De casi la descripción funciona perfectamente</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
 
       <!-- SIN FOTO — resto de reseñas -->
       <div class="review-card"><div class="review-body" style="padding-top:20px"><div class="reviewer-name">J E.</div><div class="reviewer-date">3/12/2025</div><div class="review-stars">★★★★★</div><p class="review-text">Muy buen producto. Igual al original, funciona perfectamente</p><hr class="review-divider"><div class="review-product"><img src="fotos/basta1.jpg" alt="Basta Juego"><span>Basta Juego</span></div></div></div>
