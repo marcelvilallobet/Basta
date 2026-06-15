@@ -273,6 +273,58 @@
     .btn-buy-stripe:hover { background: #b8131a; transform: translateY(-1px); }
     .btn-buy-stripe:active { transform: translateY(0); }
 
+    /* VIDEO PLAYER (mobile-first, vertical) */
+    .video-player {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      aspect-ratio: 9 / 16;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+    }
+    .video-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: rgba(0,0,0,0.28);
+      transition: opacity 0.25s;
+    }
+    .video-overlay.hidden { opacity: 0; pointer-events: none; }
+    .play-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #DD1820;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      transition: transform 0.15s;
+      padding-left: 4px;
+    }
+    .video-player:hover .play-btn { transform: scale(1.08); }
+    .video-label {
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
     /* TRUST BADGES */
     .trust-badges {
       display: flex;
@@ -702,14 +754,18 @@
   <!-- VIDEO -->
   <section class="video-section">
     <h2 class="section-title">Así funciona BastaPlay</h2>
-    <div style="max-width:780px; margin:0 auto; border-radius:16px; overflow:hidden; background:#000;">
+    <div class="video-player" id="videoPlayer" onclick="playPromo()">
       <video
-        controls
+        id="promoVideo"
         preload="metadata"
-        poster="fotos/basta1.jpg"
-        style="width:100%; display:block;">
-        <source src="fotos/promocional.mp4" type="video/mp4">
+        playsinline
+        poster="fotos/basta1.jpg">
+        <source src="fotos/promocional.mp4#t=1.5" type="video/mp4">
       </video>
+      <div class="video-overlay" id="videoOverlay">
+        <div class="play-btn"><svg viewBox="0 0 24 24" width="34" height="34" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Ver cómo se juega</span>
+      </div>
     </div>
   </section>
 
@@ -905,12 +961,12 @@
       document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
     }
-    function changeQty(delta) {
-      const input = document.getElementById('qty');
-      let val = parseInt(input.value) + delta;
-      if (val < 1) val = 1;
-      if (val > 99) val = 99;
-      input.value = val;
+    function playPromo() {
+      const v = document.getElementById('promoVideo');
+      const overlay = document.getElementById('videoOverlay');
+      overlay.classList.add('hidden');
+      v.setAttribute('controls', '');
+      v.play();
     }
     // COOKIES
     function setCookies(type) {
