@@ -9,13 +9,15 @@ Web oficial de [bastaplay.store](https://bastaplay.store), publicada automática
 3. Cambia únicamente el valor de `activeCampaign`:
 
 ```js
-activeCampaign: "verano"
+activeCampaign: "otono"
 ```
 
 Los valores permitidos son:
 
 - `verano`
+- `otono`
 - `black-friday`
+- `cyber-monday`
 - `navidad`
 
 4. Pulsa **Commit changes**.
@@ -24,7 +26,9 @@ Los valores permitidos son:
 ## Previsualizar sin cambiar la web pública
 
 - Verano: <https://bastaplay.store/?theme=verano>
+- Otoño: <https://bastaplay.store/?theme=otono>
 - Black Friday: <https://bastaplay.store/?theme=black-friday>
+- Cyber Monday: <https://bastaplay.store/?theme=cyber-monday>
 - Navidad: <https://bastaplay.store/?theme=navidad>
 
 El parámetro `?theme=` solo cambia la campaña en ese navegador. La portada normal siempre utiliza la campaña definida en `config.js`.
@@ -36,4 +40,6 @@ El parámetro `?theme=` solo cambia la campaña en ese navegador. La portada nor
 - `campaigns.css`: contiene los colores y estilos de cada campaña.
 - `index.html`: contiene la estructura compartida de la tienda.
 
-El enlace de pago, las fotografías, las reseñas, la analítica y las páginas legales se comparten entre las tres campañas.
+El precio de €18,98, el enlace de pago, las fotografías, las reseñas, la analítica y las páginas legales se comparten entre todas las campañas.
+
+Consulta también el [`PLANNING-2026-2027.md`](PLANNING-2026-2027.md) para ver el calendario comercial y las notas sobre logística y tarjeta regalo.

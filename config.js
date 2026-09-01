@@ -1,10 +1,10 @@
 /*
  * CAMPAÑA PUBLICADA
- * Cambia solamente "verano" por "black-friday" o "navidad".
+ * Cambia solamente el valor por una de las campañas permitidas.
  */
 window.BASTA_SITE = {
-  activeCampaign: "verano",
-  allowedCampaigns: ["verano", "black-friday", "navidad"]
+  activeCampaign: "otono",
+  allowedCampaigns: ["verano", "otono", "black-friday", "cyber-monday", "navidad"]
 };
 
 (function selectCampaign() {
