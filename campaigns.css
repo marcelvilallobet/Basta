@@ -1,0 +1,240 @@
+/* Elementos compartidos por todas las campañas */
+.campaign-chip {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+.campaign-preview-badge {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9998;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.92);
+  color: #fff;
+  padding: 10px 16px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+}
+
+/* VERANO: conserva la identidad roja y amarilla actual */
+html[data-campaign="verano"] .campaign-chip {
+  background: #fff0a6;
+  color: #8c5000;
+}
+
+html[data-campaign="verano"] .features-section {
+  background:
+    radial-gradient(circle at 10% 15%, rgba(255, 212, 59, 0.18), transparent 22%),
+    #fff8f8;
+}
+
+/* BLACK FRIDAY */
+html[data-campaign="black-friday"] body {
+  background: #f6f2e8;
+}
+
+html[data-campaign="black-friday"] .announcement-bar {
+  background: linear-gradient(90deg, #050505, #242424, #050505);
+  color: #ffd43b;
+}
+
+html[data-campaign="black-friday"] header,
+html[data-campaign="black-friday"] .mobile-nav {
+  background: #090909;
+  border-bottom: 2px solid #ffd43b;
+}
+
+html[data-campaign="black-friday"] .product-section,
+html[data-campaign="black-friday"] .accordion-section,
+html[data-campaign="black-friday"] .reviews-section {
+  position: relative;
+}
+
+html[data-campaign="black-friday"] .campaign-chip {
+  background: #151515;
+  color: #ffd43b;
+  box-shadow: inset 0 0 0 1px #ffd43b;
+}
+
+html[data-campaign="black-friday"] .product-brand,
+html[data-campaign="black-friday"] .price-sale,
+html[data-campaign="black-friday"] .accordion-header .icon {
+  color: #e94d00;
+}
+
+html[data-campaign="black-friday"] .thumb.active {
+  border-color: #ffd43b;
+  box-shadow: 0 0 0 1px #111;
+}
+
+html[data-campaign="black-friday"] .badge-sale {
+  background: #111;
+  color: #ffd43b;
+  box-shadow: 0 0 0 1px #ffd43b;
+}
+
+html[data-campaign="black-friday"] .btn-buy-stripe {
+  background: linear-gradient(135deg, #ff6a00, #dd3600);
+  box-shadow: 0 8px 20px rgba(221, 54, 0, 0.24);
+}
+
+html[data-campaign="black-friday"] .btn-buy-stripe:hover {
+  background: linear-gradient(135deg, #e95700, #be2e00);
+}
+
+html[data-campaign="black-friday"] .features-section {
+  background:
+    linear-gradient(135deg, rgba(255, 212, 59, 0.08) 25%, transparent 25%) 0 0 / 28px 28px,
+    #111;
+  border-color: #ffd43b;
+}
+
+html[data-campaign="black-friday"] .features-section .section-title {
+  color: #ffd43b;
+}
+
+html[data-campaign="black-friday"] .feature-card {
+  border-color: #2c2c2c;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+}
+
+html[data-campaign="black-friday"] .feature-card:hover {
+  border-color: #ffd43b;
+}
+
+html[data-campaign="black-friday"] .btn-show-more {
+  border-color: #111;
+  color: #111;
+}
+
+html[data-campaign="black-friday"] .btn-show-more:hover {
+  background: #111;
+  color: #ffd43b;
+}
+
+html[data-campaign="black-friday"] .cta-band {
+  background:
+    radial-gradient(circle at 15% 50%, rgba(255, 212, 59, 0.14), transparent 28%),
+    #090909;
+  color: #fff;
+  border-top: 3px solid #ffd43b;
+}
+
+html[data-campaign="black-friday"] .btn-cta-big {
+  background: #ffd43b;
+  color: #090909;
+}
+
+/* NAVIDAD / INVIERNO */
+html[data-campaign="navidad"] body {
+  background: #f5fbfa;
+}
+
+html[data-campaign="navidad"] .announcement-bar {
+  background: linear-gradient(90deg, #0b4b3f, #146b58, #0b4b3f);
+  color: #fff7d1;
+}
+
+html[data-campaign="navidad"] header,
+html[data-campaign="navidad"] .mobile-nav {
+  background: #a6121b;
+  border-bottom: 2px solid #f2d06b;
+}
+
+html[data-campaign="navidad"] .campaign-chip {
+  background: #e8f5ef;
+  color: #0b644f;
+  box-shadow: inset 0 0 0 1px #8dbfac;
+}
+
+html[data-campaign="navidad"] .product-brand,
+html[data-campaign="navidad"] .price-sale,
+html[data-campaign="navidad"] .accordion-header .icon {
+  color: #a6121b;
+}
+
+html[data-campaign="navidad"] .thumb.active {
+  border-color: #0b644f;
+}
+
+html[data-campaign="navidad"] .badge-sale {
+  background: #0b644f;
+  color: #fff;
+}
+
+html[data-campaign="navidad"] .btn-buy-stripe {
+  background: linear-gradient(135deg, #bf1824, #941019);
+  box-shadow: 0 8px 20px rgba(148, 16, 25, 0.22);
+}
+
+html[data-campaign="navidad"] .btn-buy-stripe:hover {
+  background: linear-gradient(135deg, #a8131d, #7d0d15);
+}
+
+html[data-campaign="navidad"] .features-section {
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.95) 0 2px, transparent 2.5px) 0 0 / 30px 30px,
+    linear-gradient(135deg, #eaf7f3, #fff8ee);
+  border-color: #0b644f;
+}
+
+html[data-campaign="navidad"] .feature-card {
+  border-color: #d9ebe5;
+  box-shadow: 0 8px 24px rgba(11, 100, 79, 0.08);
+}
+
+html[data-campaign="navidad"] .feature-card:hover {
+  border-color: #a6121b;
+}
+
+html[data-campaign="navidad"] .btn-show-more {
+  border-color: #0b644f;
+  color: #0b644f;
+}
+
+html[data-campaign="navidad"] .btn-show-more:hover {
+  background: #0b644f;
+  color: #fff;
+}
+
+html[data-campaign="navidad"] .cta-band {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.13), transparent 24%),
+    linear-gradient(135deg, #0b644f, #083e34);
+  color: #fff;
+  border-top: 3px solid #f2d06b;
+}
+
+html[data-campaign="navidad"] .btn-cta-big {
+  background: #f2d06b;
+  color: #17382f;
+}
+
+html[data-campaign="navidad"] footer {
+  border-top: 3px solid #a6121b;
+}
+
+@media (max-width: 600px) {
+  .campaign-chip {
+    display: flex;
+    width: max-content;
+    margin: 8px 0 0;
+  }
+
+  .campaign-preview-badge {
+    right: 10px;
+    bottom: 10px;
+  }
+}

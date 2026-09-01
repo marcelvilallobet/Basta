@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -24,8 +26,6 @@
 
   gtag('config', 'G-3YYYZKBV6C');
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BastaPlay – Basta Juego</title>
   <link rel="icon" href="fotos/favicon.png">
   <link rel="preload" as="image" href="fotos/basta1.jpg" fetchpriority="high">
@@ -33,6 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <script src="config.js" charset="UTF-8"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Quicksand', sans-serif; background: #fff; color: #1a1a1a; }
@@ -602,12 +603,14 @@
       .reviews-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="campaigns.css">
+  <script defer src="campaigns.js" charset="UTF-8"></script>
 </head>
 <body>
 
   <!-- ANNOUNCEMENT BAR -->
-  <div class="announcement-bar">
-    🎉 Descuento activo hasta el sábado — ¡Aprovecha antes de que suba el precio!
+  <div class="announcement-bar" data-campaign-text="announcement">
+    ☀️ Descuento de verano activo — ¡El juego perfecto para sobremesas y vacaciones!
   </div>
 
   <!-- HEADER -->
@@ -666,7 +669,7 @@
 
     <!-- Product info -->
     <div class="product-info">
-      <div class="product-brand">BastaPlay</div>
+      <div class="product-brand">BastaPlay <span class="campaign-chip" data-campaign-name>☀️ Verano</span></div>
       <h1 class="product-title">Basta Juego</h1>
 
       <div class="stars-row">
@@ -677,7 +680,7 @@
       <div class="price-row">
         <span class="price-original">€22,98</span>
         <span class="price-sale">€18,98</span>
-        <span class="badge-sale">OFERTA</span>
+        <span class="badge-sale" data-campaign-text="badge">OFERTA VERANO</span>
       </div>
 
       <p class="product-description">
@@ -685,7 +688,7 @@
         El clásico juego de velocidad: una letra, varias categorías y todos gritando respuestas antes que los demás.
         Fácil de aprender, imposible de soltar, con instrucciones listas para arrancar en menos de 1 minuto.<br><br>
         Películas, lugares, cosas random y retos divertidos. Baraja de tarjetas variada para que cada ronda sea distinta.
-        Perfecto para cenas y sobremesas. Desde los más pequeños hasta los más competitivos.
+        <span data-campaign-text="productTail">Perfecto para cenas, sobremesas y vacaciones. Desde los más pequeños hasta los más competitivos.</span>
       </p>
 
       <a class="btn-buy-stripe" href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">
@@ -722,11 +725,11 @@
     </div>
     <div class="accordion-item">
       <button class="accordion-header" onclick="toggleAccordion(this)">
-        <span>🎁 Descuento de Verano</span>
+        <span data-campaign-text="offerTitle">☀️ Descuento de Verano</span>
         <span class="icon">+</span>
       </button>
-      <div class="accordion-body">
-        Una vez termine el descuento el precio del producto volverá a su valor original de €22,98. ¡Aprovecha antes de que acabe la oferta!
+      <div class="accordion-body" data-campaign-text="offerBody">
+        Una vez termine el descuento, el precio del producto volverá a su valor original de €22,98. ¡Aprovecha la oferta de verano!
       </div>
     </div>
   </div>
@@ -883,8 +886,8 @@
 
   <!-- CTA BAND -->
   <section class="cta-band">
-    <h2>¿A qué esperas?</h2>
-    <p>Llévate el juego favorito de las sobremesas con un <strong>18% de descuento</strong> — solo por tiempo limitado.</p>
+    <h2 data-campaign-text="ctaTitle">¿Listos para jugar?</h2>
+    <p data-campaign-text="ctaText">Llévate el juego favorito de las sobremesas con un 18% de descuento durante nuestra campaña de verano.</p>
     <a class="btn-cta-big" href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">
       ¡Comprar ahora por €18,98!
     </a>
