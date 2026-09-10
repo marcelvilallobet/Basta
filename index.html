@@ -604,6 +604,7 @@
     }
   </style>
   <link rel="stylesheet" href="campaigns.css">
+  <script defer src="pricing.js" charset="UTF-8"></script>
   <script defer src="campaigns.js" charset="UTF-8"></script>
 </head>
 <body>
@@ -678,8 +679,20 @@
       </div>
 
       <div class="price-row">
-        <span class="price-sale">€18,98</span>
+        <span class="price-sale" data-unit-price>—</span>
         <span class="badge-sale" data-campaign-text="badge">OTOÑO</span>
+      </div>
+
+      <div class="purchase-options" data-purchase-options hidden>
+        <button class="purchase-option active" type="button" data-purchase-option="unit" aria-pressed="true">
+          <span class="purchase-option-label">1 unidad</span>
+          <strong data-unit-price>—</strong>
+        </button>
+        <button class="purchase-option" type="button" data-purchase-option="pack2" aria-pressed="false">
+          <span class="purchase-option-label">Pack de 2</span>
+          <strong data-pack2-price>—</strong>
+          <small>Ahorras <span data-pack-saving>—</span></small>
+        </button>
       </div>
 
       <p class="product-description">
@@ -690,8 +703,8 @@
         <span data-campaign-text="productTail">Perfecto para tardes en casa, cenas con amigos y sobremesas en familia. Fácil de aprender e imposible de soltar.</span>
       </p>
 
-      <a class="btn-buy-stripe" href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">
-        Comprar ahora — €18,98
+      <a class="btn-buy-stripe" data-buy-button href="#" target="_blank">
+        Comprar <span data-selected-quantity>1</span> — <span data-selected-price>—</span>
       </a>
 
       <div class="trust-badges">
@@ -728,7 +741,7 @@
         <span class="icon">+</span>
       </button>
       <div class="accordion-body" data-campaign-text="offerBody">
-        Basta Juego mantiene su precio habitual de €18,98. Una excusa perfecta para volver a reunir a todos alrededor de la mesa.
+        Basta Juego mantiene su precio habitual. Una excusa perfecta para volver a reunir a todos alrededor de la mesa.
       </div>
     </div>
   </div>
@@ -887,8 +900,8 @@
   <section class="cta-band">
     <h2 data-campaign-text="ctaTitle">Las mejores tardes empiezan con Basta</h2>
     <p data-campaign-text="ctaText">Una letra, varias categorías y todos intentando responder primero. Este otoño, vuelve a jugar en familia.</p>
-    <a class="btn-cta-big" href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">
-      ¡Comprar ahora por €18,98!
+    <a class="btn-cta-big" data-buy-button href="#" target="_blank">
+      ¡Comprar <span data-selected-quantity>1</span> por <span data-selected-price>—</span>!
     </a>
   </section>
 
@@ -907,7 +920,7 @@
         <ul>
           <li><a href="#">Inicio</a></li>
           <li><a href="#">Catálogo</a></li>
-          <li><a href="https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00" target="_blank">Comprar</a></li>
+          <li><a data-buy-button href="#" target="_blank">Comprar</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1024,10 +1037,15 @@
 
   <!-- Meta Pixel — rastrear clic en "Comprar" (InitiateCheckout) -->
   <script>
-    document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(link){
+    document.querySelectorAll('[data-buy-button]').forEach(function(link){
       link.addEventListener('click', function(){
         if (typeof fbq === 'function') {
-          fbq('track', 'InitiateCheckout', {value: 18.98, currency: 'EUR'});
+          fbq('track', 'InitiateCheckout', {
+            value: Number(link.dataset.checkoutValue || window.BASTA_SITE.pricing.unitPrice),
+            currency: window.BASTA_SITE.pricing.currency,
+            content_ids: ['basta-juego'],
+            num_items: Number(link.dataset.checkoutQuantity || 1)
+          });
         }
       });
     });

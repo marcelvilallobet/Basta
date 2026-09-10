@@ -1,4 +1,59 @@
 /* Elementos compartidos por todas las campañas */
+[hidden] {
+  display: none !important;
+}
+
+.purchase-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: -8px 0 20px;
+}
+
+.purchase-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  min-height: 82px;
+  padding: 13px 15px;
+  border: 2px solid #dedede;
+  border-radius: 10px;
+  background: #fff;
+  color: #252525;
+  font-family: 'Quicksand', sans-serif;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.purchase-option:hover {
+  border-color: var(--campaign-accent, #DD1820);
+  transform: translateY(-1px);
+}
+
+.purchase-option.active {
+  border-color: var(--campaign-accent, #DD1820);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--campaign-accent, #DD1820) 16%, transparent);
+}
+
+.purchase-option-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.purchase-option strong {
+  font-size: 19px;
+}
+
+.purchase-option small {
+  color: #55725f;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .campaign-chip {
   display: inline-flex;
   align-items: center;
@@ -34,6 +89,10 @@ html[data-campaign="verano"] .campaign-chip {
   color: #8c5000;
 }
 
+html[data-campaign="verano"] {
+  --campaign-accent: #DD1820;
+}
+
 html[data-campaign="verano"] .features-section {
   background:
     radial-gradient(circle at 10% 15%, rgba(255, 212, 59, 0.18), transparent 22%),
@@ -43,6 +102,10 @@ html[data-campaign="verano"] .features-section {
 /* OTOÑO */
 html[data-campaign="otono"] body {
   background: #fffaf2;
+}
+
+html[data-campaign="otono"] {
+  --campaign-accent: #a4421f;
 }
 
 html[data-campaign="otono"] .announcement-bar {
@@ -128,6 +191,10 @@ html[data-campaign="otono"] .btn-cta-big {
 /* BLACK FRIDAY */
 html[data-campaign="black-friday"] body {
   background: #f6f2e8;
+}
+
+html[data-campaign="black-friday"] {
+  --campaign-accent: #e94d00;
 }
 
 html[data-campaign="black-friday"] .announcement-bar {
@@ -227,6 +294,10 @@ html[data-campaign="cyber-monday"] body {
   background: #f1f8fb;
 }
 
+html[data-campaign="cyber-monday"] {
+  --campaign-accent: #007f91;
+}
+
 html[data-campaign="cyber-monday"] .announcement-bar {
   background: linear-gradient(90deg, #020712, #08263b, #020712);
   color: #5ff5ff;
@@ -319,6 +390,10 @@ html[data-campaign="navidad"] body {
   background: #f5fbfa;
 }
 
+html[data-campaign="navidad"] {
+  --campaign-accent: #a6121b;
+}
+
 html[data-campaign="navidad"] .announcement-bar {
   background: linear-gradient(90deg, #0b4b3f, #146b58, #0b4b3f);
   color: #fff7d1;
@@ -404,6 +479,10 @@ html[data-campaign="navidad"] footer {
 }
 
 @media (max-width: 600px) {
+  .purchase-options {
+    grid-template-columns: 1fr;
+  }
+
   .campaign-chip {
     display: flex;
     width: max-content;
