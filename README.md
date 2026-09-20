@@ -1,6 +1,6 @@
 # Letrazo
 
-Web oficial de [letrazo.store](https://letrazo.store), publicada automáticamente con GitHub Pages desde la rama `main`.
+Web de Letrazo publicada temporalmente en [bastaplay.store](https://bastaplay.store) mediante GitHub Pages desde la rama `main`. El dominio definitivo será `letrazo.store` cuando se complete la migración.
 
 ## Cambiar la campaña publicada
 
@@ -25,11 +25,11 @@ Los valores permitidos son:
 
 ## Previsualizar sin cambiar la web pública
 
-- Verano: <https://letrazo.store/?theme=verano>
-- Otoño: <https://letrazo.store/?theme=otono>
-- Black Friday: <https://letrazo.store/?theme=black-friday>
-- Cyber Monday: <https://letrazo.store/?theme=cyber-monday>
-- Navidad: <https://letrazo.store/?theme=navidad>
+- Verano: <https://bastaplay.store/?theme=verano>
+- Otoño: <https://bastaplay.store/?theme=otono>
+- Black Friday: <https://bastaplay.store/?theme=black-friday>
+- Cyber Monday: <https://bastaplay.store/?theme=cyber-monday>
+- Navidad: <https://bastaplay.store/?theme=navidad>
 
 El parámetro `?theme=` solo cambia la campaña en ese navegador. La portada normal siempre utiliza la campaña definida en `config.js`.
 
@@ -75,6 +75,6 @@ El selector permanece oculto si falta el enlace válido de Stripe, evitando cobr
 
 ## Cambio de dominio
 
-El repositorio ya declara `letrazo.store` como dominio principal. En GoDaddy deben configurarse los registros DNS de GitHub Pages antes de publicar este cambio; el dominio anterior puede redirigirse a Letrazo cuando la migración esté comprobada.
+Mientras se revisa la nueva web, GitHub Pages conserva `bastaplay.store` como dominio principal. Cuando se configure GoDaddy, cambiaremos `CNAME` a `letrazo.store` y el dominio anterior podrá redirigirse a Letrazo.
 
 Consulta también el [`PLANNING-2026-2027.md`](PLANNING-2026-2027.md) para ver el calendario comercial y las notas sobre logística y tarjeta regalo.
