@@ -65,13 +65,12 @@ El precio se calcula automáticamente con esta fórmula:
 
 Con el precio actual y una reducción de 4 € en la segunda unidad, el pack resulta en 33,96 €.
 
-Para publicarlo:
+En la rama `preview-pack-2`, el selector está visible en modo demostración y el botón del pack no permite pagar hasta que exista un enlace válido. Para dejarlo listo:
 
 1. Crea en Stripe un Payment Link de pack de 2 por el importe calculado.
 2. En `config.js`, pega el enlace en `pack2.stripeUrl`.
-3. Cambia `pack2.enabled` de `false` a `true`.
 
-El selector permanece oculto si falta el enlace válido de Stripe, evitando cobros incorrectos.
+Con solo pegar el enlace, el botón se activa automáticamente. Hasta entonces muestra claramente que el enlace está pendiente, evitando cobros incorrectos. En la rama pública `main`, el pack sigue desactivado hasta que se apruebe esta versión.
 
 ## Cambio de dominio
 

@@ -195,7 +195,12 @@
     .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
     /* PRODUCT INFO */
-    .product-info { flex: 1; padding-top: 4px; }
+    .product-info {
+      flex: 1;
+      padding-top: 4px;
+      position: sticky;
+      top: 94px;
+    }
     .product-brand {
       font-size: 11px;
       font-weight: 800;
@@ -242,6 +247,106 @@
       letter-spacing: 0.3px;
     }
 
+    /* CONVERSION SUMMARY + PACK SELECTOR */
+    .benefit-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px 14px;
+      margin: 0 0 24px;
+    }
+    .benefit-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #333;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .benefit-list li::before {
+      content: "✓";
+      display: grid;
+      place-items: center;
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff0f0;
+      color: #DD1820;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .pack-heading {
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.3px;
+      color: #1a1a1a;
+    }
+    .purchase-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .purchase-options[hidden] { display: none; }
+    .purchase-option {
+      position: relative;
+      min-height: 116px;
+      padding: 18px 14px 14px;
+      border: 2px solid #e6e6e6;
+      border-radius: 12px;
+      background: #fff;
+      color: #1a1a1a;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+    }
+    .purchase-option:hover { border-color: #ef9a9e; transform: translateY(-1px); }
+    .purchase-option.active {
+      border-color: #DD1820;
+      box-shadow: 0 0 0 3px rgba(221,24,32,.10);
+      background: #fffafa;
+    }
+    .purchase-option-label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .purchase-option strong {
+      display: block;
+      color: #DD1820;
+      font-size: 21px;
+      line-height: 1.15;
+    }
+    .purchase-option small {
+      display: block;
+      margin-top: 7px;
+      color: #666;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .pack-ribbon {
+      position: absolute;
+      top: -10px;
+      right: 9px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #FFD43B;
+      color: #1a1a1a;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+    .pack-note {
+      margin: 0 0 20px;
+      color: #666;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     .product-description {
       font-size: 15px;
       color: #444;
@@ -269,6 +374,23 @@
     }
     .btn-buy-stripe:hover { background: #b8131a; transform: translateY(-1px); }
     .btn-buy-stripe:active { transform: translateY(0); }
+    .btn-buy-stripe.is-pending {
+      background: #6f6f6f;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-cta-big.is-pending,
+    footer [data-buy-button].is-pending {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+    .checkout-note {
+      margin: -4px 0 18px;
+      text-align: center;
+      color: #666;
+      font-size: 11px;
+      font-weight: 600;
+    }
 
     /* VIDEO PLAYER (mobile-first, vertical) */
     .video-player {
@@ -604,6 +726,7 @@
 
     @media (max-width: 800px) {
       .product-section { flex-direction: column; gap: 24px; }
+      .product-info { position: static; width: 100%; }
       .gallery { flex: none; max-width: 100%; }
       .product-title { font-size: 26px; }
       .footer-inner { flex-direction: column; gap: 26px; }
@@ -618,6 +741,11 @@
     }
     @media (max-width: 380px) {
       .reviews-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .benefit-list { grid-template-columns: 1fr; }
+      .purchase-options { grid-template-columns: 1fr; }
+      .purchase-option { min-height: 100px; }
     }
   </style>
   <link rel="stylesheet" href="campaigns.css">
@@ -697,27 +825,40 @@
       <div class="product-brand">Letrazo <span class="campaign-chip" data-campaign-name>🍂 Otoño</span></div>
       <h1 class="product-title">Juego de Letras con Ruleta Digital</h1>
 
-      <div class="stars-row">
+      <a class="stars-row" href="#opiniones" aria-label="Ver las 44 reseñas">
         <span class="stars">★★★★★</span>
         <span class="reviews-count">4.8 · 44 reseñas</span>
-      </div>
+      </a>
 
       <div class="price-row">
         <span class="price-sale" data-unit-price>—</span>
         <span class="badge-sale" data-campaign-text="badge">OTOÑO</span>
       </div>
 
+      <ul class="benefit-list" aria-label="Ventajas principales">
+        <li>2 modos de juego</li>
+        <li>140 categorías</li>
+        <li>Para 2 o más jugadores</li>
+        <li>Envío gratuito</li>
+      </ul>
+
+      <p class="pack-heading">ELIGE TU PACK</p>
+
       <div class="purchase-options" data-purchase-options hidden>
         <button class="purchase-option active" type="button" data-purchase-option="unit" aria-pressed="true">
           <span class="purchase-option-label">1 unidad</span>
           <strong data-unit-price>—</strong>
+          <small>Perfecto para empezar</small>
         </button>
         <button class="purchase-option" type="button" data-purchase-option="pack2" aria-pressed="false">
+          <span class="pack-ribbon">MÁS ELEGIDO</span>
           <span class="purchase-option-label">Pack de 2</span>
           <strong data-pack2-price>—</strong>
           <small>Ahorras <span data-pack-saving>—</span></small>
         </button>
       </div>
+
+      <p class="pack-note">Dos juegos para regalar, compartir o llevar uno a cada casa.</p>
 
       <p class="product-description">
         <strong>¿Qué es Letrazo?</strong><br>
@@ -729,8 +870,9 @@
       </p>
 
       <a class="btn-buy-stripe" data-buy-button href="#" target="_blank">
-        Comprar <span data-selected-quantity>1</span> — <span data-selected-price>—</span>
+        <span data-buy-label>Comprar 1</span> — <span data-selected-price>—</span>
       </a>
+      <p class="checkout-note" data-purchase-status>Pago seguro con Stripe · Envío gratuito</p>
 
       <div class="trust-badges">
         <div class="trust-badge">📦 Envío gratis y asegurado</div>
@@ -825,7 +967,7 @@
   </section>
 
   <!-- REVIEWS -->
-  <section class="reviews-section">
+  <section class="reviews-section" id="opiniones">
     <div class="reviews-loox-header">
       <div class="reviews-loox-left">
         <span class="reviews-loox-stars">★★★★★</span>
@@ -907,7 +1049,7 @@
     <h2 data-campaign-text="ctaTitle">Las mejores tardes empiezan con Letrazo</h2>
     <p data-campaign-text="ctaText">Una letra, varias categorías y todos intentando responder primero. Este otoño, vuelve a jugar en familia.</p>
     <a class="btn-cta-big" data-buy-button href="#" target="_blank">
-      ¡Comprar <span data-selected-quantity>1</span> por <span data-selected-price>—</span>!
+      ¡<span data-buy-label>Comprar 1</span> por <span data-selected-price>—</span>!
     </a>
   </section>
 
@@ -1039,6 +1181,7 @@
   <script>
     document.querySelectorAll('[data-buy-button]').forEach(function(link){
       link.addEventListener('click', function(){
+        if (link.dataset.checkoutReady === 'false') return;
         if (typeof fbq === 'function') {
           fbq('track', 'InitiateCheckout', {
             value: Number(link.dataset.checkoutValue || window.BASTA_SITE.pricing.unitPrice),

@@ -17,7 +17,7 @@ window.BASTA_SITE = {
     unitPrice: 18.98,
     unitStripeUrl: "https://buy.stripe.com/cNi28tfDW7yneyq0WI5kk00",
     pack2: {
-      enabled: false,
+      enabled: true,
       secondUnitReduction: 4,
       stripeUrl: ""
     }

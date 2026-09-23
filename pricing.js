@@ -3,6 +3,7 @@
 
   var pricing = window.BASTA_SITE.pricing;
   var pack2Price = (pricing.unitPrice * 2) - pricing.pack2.secondUnitReduction;
+  var pack2Visible = pricing.pack2.enabled;
   var pack2Ready = pricing.pack2.enabled && /^https:\/\/buy\.stripe\.com\//.test(pricing.pack2.stripeUrl);
 
   function formatMoney(value) {
@@ -38,9 +39,10 @@
   }
 
   function selectPurchaseOption(option) {
-    var usePack = option === "pack2" && pack2Ready;
+    var usePack = option === "pack2" && pack2Visible;
     var selectedPrice = usePack ? values.pack2Price : values.unitPrice;
-    var selectedUrl = usePack ? pricing.pack2.stripeUrl : pricing.unitStripeUrl;
+    var checkoutReady = !usePack || pack2Ready;
+    var selectedUrl = usePack && pack2Ready ? pricing.pack2.stripeUrl : pricing.unitStripeUrl;
     var selectedQuantity = usePack ? 2 : 1;
 
     document.querySelectorAll("[data-purchase-option]").forEach(function (button) {
@@ -50,13 +52,20 @@
     });
 
     document.querySelectorAll("[data-buy-button]").forEach(function (link) {
-      link.href = selectedUrl;
+      link.href = checkoutReady ? selectedUrl : "#";
       link.dataset.checkoutValue = String(selectedPrice);
       link.dataset.checkoutQuantity = String(selectedQuantity);
+      link.dataset.checkoutReady = checkoutReady ? "true" : "false";
+      link.classList.toggle("is-pending", !checkoutReady);
+      link.setAttribute("aria-disabled", checkoutReady ? "false" : "true");
     });
 
     setText("[data-selected-price]", formatMoney(selectedPrice));
     setText("[data-selected-quantity]", String(selectedQuantity));
+    setText("[data-buy-label]", checkoutReady ? "Comprar " + selectedQuantity : "Enlace del pack pendiente");
+    setText("[data-purchase-status]", checkoutReady
+      ? "Pago seguro con Stripe · Envío gratuito"
+      : "Vista previa: añade el nuevo enlace de Stripe para activar este pack");
   }
 
   function applyPricing() {
@@ -65,11 +74,17 @@
     setText("[data-pack-saving]", values.packSavingLabel);
 
     var options = document.querySelector("[data-purchase-options]");
-    if (options && pack2Ready) options.hidden = false;
+    if (options && pack2Visible) options.hidden = false;
 
     document.querySelectorAll("[data-purchase-option]").forEach(function (button) {
       button.addEventListener("click", function () {
         selectPurchaseOption(button.dataset.purchaseOption);
+      });
+    });
+
+    document.querySelectorAll("[data-buy-button]").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        if (link.dataset.checkoutReady === "false") event.preventDefault();
       });
     });
 
