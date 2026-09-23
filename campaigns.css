@@ -478,6 +478,93 @@ html[data-campaign="navidad"] footer {
   border-top: 3px solid #a6121b;
 }
 
+/*
+ * PROTECCIÓN DE MARCA
+ * Las campañas visten Letrazo, pero no sustituyen su identidad.
+ * El rojo, el amarillo y los elementos de compra se mantienen siempre.
+ */
+html[data-campaign] {
+  --campaign-accent: #DD1820;
+  --brand-red: #DD1820;
+  --brand-red-dark: #b8131a;
+  --brand-yellow: #FFD43B;
+}
+
+html[data-campaign="verano"] { --campaign-detail: #FFD43B; }
+html[data-campaign="otono"] { --campaign-detail: #e7a83e; }
+html[data-campaign="black-friday"] { --campaign-detail: #FFD43B; }
+html[data-campaign="cyber-monday"] { --campaign-detail: #29dce7; }
+html[data-campaign="navidad"] { --campaign-detail: #f2d06b; }
+
+html[data-campaign] header,
+html[data-campaign] .mobile-nav {
+  background: var(--brand-red);
+  border-bottom: 2px solid var(--campaign-detail);
+}
+
+html[data-campaign] .product-brand,
+html[data-campaign] .price-sale,
+html[data-campaign] .accordion-header .icon {
+  color: var(--brand-red);
+}
+
+html[data-campaign] .thumb.active {
+  border-color: var(--brand-red);
+  box-shadow: none;
+}
+
+html[data-campaign] .btn-buy-stripe {
+  background: var(--brand-red);
+  box-shadow: 0 8px 20px rgba(221, 24, 32, 0.22);
+}
+
+html[data-campaign] .btn-buy-stripe:hover {
+  background: var(--brand-red-dark);
+}
+
+html[data-campaign] .features-section {
+  background:
+    radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--campaign-detail) 14%, transparent), transparent 24%),
+    #fff8f8;
+  border-color: var(--brand-red);
+}
+
+html[data-campaign] .features-section .section-title {
+  color: #1a1a1a;
+}
+
+html[data-campaign] .feature-card {
+  border-color: #f0dddd;
+  box-shadow: 0 8px 24px rgba(75, 20, 20, 0.07);
+}
+
+html[data-campaign] .feature-card:hover {
+  border-color: var(--brand-red);
+}
+
+html[data-campaign] .btn-show-more {
+  border-color: var(--brand-red);
+  color: var(--brand-red);
+}
+
+html[data-campaign] .btn-show-more:hover {
+  background: var(--brand-red);
+  color: #fff;
+}
+
+html[data-campaign] .cta-band {
+  background:
+    radial-gradient(circle at 16% 35%, rgba(255, 212, 59, 0.14), transparent 26%),
+    linear-gradient(135deg, #DD1820, #a91219);
+  color: #fff;
+  border-top: 3px solid var(--campaign-detail);
+}
+
+html[data-campaign] .btn-cta-big {
+  background: var(--brand-yellow);
+  color: #1a1a1a;
+}
+
 @media (max-width: 600px) {
   .purchase-options {
     grid-template-columns: 1fr;
