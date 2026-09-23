@@ -147,7 +147,18 @@
 
     @media (max-width: 640px) {
       nav { display: none; }
-      .hamburger { display: flex; }
+      header { justify-content: flex-start; }
+      .header-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .hamburger {
+        display: flex;
+        order: -1;
+        margin-right: auto;
+        z-index: 1;
+      }
     }
 
     /* PRODUCT SECTION */
